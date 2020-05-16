@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TicTacToeTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-05-16T14:13:54" hostname="DESKTOP-OQ28VOD" time="0.004">
+  <properties/>
+  <testcase name="checkWinner_WinnerAtTheFirstRow_True" classname="TicTacToeTest" time="0.001"/>
+  <testcase name="checkWinner_ThereIsAWinner_True" classname="TicTacToeTest" time="0.0"/>
+  <testcase name="checkBox_Check_True" classname="TicTacToeTest" time="0.0"/>
+  <testcase name="isGameInProgress_GameInProgress_True" classname="TicTacToeTest" time="0.0"/>
+  <testcase name="isGameInProgress_GameIsOver_False" classname="TicTacToeTest" time="0.001"/>
+  <testcase name="checkBox_CheckedBoxCanBeChecked_False" classname="TicTacToeTest" time="0.0"/>
+  <testcase name="verifyBoxAvailability_BoxAvailable_True" classname="TicTacToeTest" time="0.0"/>
+  <testcase name="isGameInProgress_GameInProgressAfterTheFifthTurn_False" classname="TicTacToeTest" time="0.0"/>
+  <testcase name="checkWinner_WinnerAtTheSecondRow_True" classname="TicTacToeTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
