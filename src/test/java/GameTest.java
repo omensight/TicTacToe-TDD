@@ -1,13 +1,13 @@
 import org.junit.Assert;
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
 
 public class GameTest {
-
-    @Test
+    Game game;
+    @Before
     public void check_GameAllowEntrance(){
-        TicTacToe ticTacToe = new TicTacToeMatrix();
-        Game game = new Game(ticTacToe);
-//        Assert.assertTrue(game.check);
+        TicTacToe ticTacToe = new TicTacToe();
+        game = new Game(ticTacToe);
+        game.startGame();
     }
 }
