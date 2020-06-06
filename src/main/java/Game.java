@@ -12,6 +12,7 @@ public class Game {
         scanner = new Scanner(System.in);
     }
     private void showMainMenu(){
+        System.out.println("---------------------------------------\n");
         System.out.println("What would you like to do?");
         System.out.println("1. Play");
         System.out.println("2. Exit");
@@ -19,7 +20,7 @@ public class Game {
         int option = scanner.nextInt();
         switch (option){
             case 1:
-                startGame();
+                run();
                 break;
             case 2:
                 break;
@@ -29,7 +30,7 @@ public class Game {
         }
     }
 
-    public void startGame() {
+    public void run() {
         ticTacToe.create();
         while (!ticTacToe.draw() && !ticTacToe.checkTicTacToe()){
             drawBoard();
@@ -63,11 +64,15 @@ public class Game {
             showMainMenu();
             return;
         }
-        ticTacToe.markMove(x, y);
-        turn = turn == ODD ? EVEN : ODD;
+        if (ticTacToe.markMove(x, y)){
+            turn = turn == ODD ? EVEN : ODD;
+        }else {
+            System.err.println("Invalid mark, please enter a correct one");
+        }
     }
 
     private void drawBoard(){
+        System.out.println("\n····································");
         char[][] board =ticTacToe.getBoard();
         for (char[] chars : board) {
             for (char symbol : chars) {

@@ -40,12 +40,6 @@ public class ITicTacToeTest {
     }
 
     @Test
-    public void markMove_MarkAtOutOfBounds_False(){
-        ticTacToe.create();
-        Assert.assertFalse(ticTacToe.markMove(6,6));
-    }
-
-    @Test
     public void checkTicTacToe_ThereIsTicTacToeInDecrescentDiagonal_True(){
         ticTacToe.create();
         ticTacToe.markMove(0,0);
@@ -141,7 +135,6 @@ public class ITicTacToeTest {
         ticTacToe.markMove(1,2);
         ticTacToe.markMove(0,0);
         ticTacToe.markMove(2,2);
-        ticTacToe.checkTicTacToe();
         Assert.assertEquals('X', ticTacToe.winner());
     }
 
@@ -154,7 +147,6 @@ public class ITicTacToeTest {
         ticTacToe.markMove(2,1);
         ticTacToe.markMove(1,1);
         ticTacToe.markMove(2,2);
-        ticTacToe.checkTicTacToe();
         Assert.assertEquals('O', ticTacToe.winner());
     }
 
@@ -162,15 +154,15 @@ public class ITicTacToeTest {
     public void draw_GameDrawAfterTheNinthTurn(){
         ticTacToe.create();
         ticTacToe.markMove(0,0);
-        ticTacToe.markMove(0,1);
-        ticTacToe.markMove(0,2);
         ticTacToe.markMove(1,0);
-        ticTacToe.markMove(1,1);
-        ticTacToe.markMove(1,2);
         ticTacToe.markMove(2,0);
         ticTacToe.markMove(2,1);
+        ticTacToe.markMove(0,1);
         ticTacToe.markMove(2,2);
-        ticTacToe.checkTicTacToe();
+        ticTacToe.markMove(1,1);
+        ticTacToe.markMove(0,2);
+        ticTacToe.markMove(1,2);
+
         Assert.assertTrue(ticTacToe.draw());
     }
 }
