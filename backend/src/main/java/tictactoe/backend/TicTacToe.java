@@ -11,13 +11,23 @@ public class TicTacToe implements ITicTacToe {
     private final static int MAX_TURNS = DIMENSION * DIMENSION;
     private final static char ODD_SYMBOL = 'X';
     private final static char EVEN_SYMBOL = 'O';
+    private final static char EMPTY = '-';
     private char currentPlayerSymbol;
     private boolean gameInProgress;
     private int turn;
 
+    public TicTacToe(){
+        board = new char[DIMENSION][DIMENSION];
+        create();
+    }
+
     @Override
     public void create() {
-        board = new char[DIMENSION][DIMENSION];
+        for (int i = 0 ; i < DIMENSION; i++){
+            for (int j = 0 ; j < DIMENSION; j++){
+                board[i][j] = EMPTY;
+            }
+        }
         currentPlayerSymbol = ODD_SYMBOL;
         turn = 1;
         gameInProgress = true;
@@ -28,7 +38,7 @@ public class TicTacToe implements ITicTacToe {
         boolean xBetweenTheBounds = row >= 0 && row < DIMENSION;
         boolean yBetweenTheBounds = column >= 0 && column < DIMENSION;
         if (xBetweenTheBounds && yBetweenTheBounds){
-            isAvailable = board[row][column] == 0;
+            isAvailable = board[row][column] == EMPTY;
         }
         return isAvailable;
     }
@@ -78,8 +88,8 @@ public class TicTacToe implements ITicTacToe {
         }
         Set<Character> crescentFrequency = new HashSet<>(Arrays.asList(crescentDiagonal));
         Set<Character> decrescentFrequency = new HashSet<>(Arrays.asList(decrescentDiagonal));
-        thereIsAWinner = crescentFrequency.size()==1 && !crescentFrequency.contains('\u0000')
-                || decrescentFrequency.size()==1 && !decrescentFrequency.contains('\u0000');
+        thereIsAWinner = crescentFrequency.size()==1 && !crescentFrequency.contains(EMPTY)
+                || decrescentFrequency.size()==1 && !decrescentFrequency.contains(EMPTY);
 
         return thereIsAWinner;
     }
@@ -91,7 +101,7 @@ public class TicTacToe implements ITicTacToe {
             for (int j = 0; j < DIMENSION ; j++){
                 row.add(board[i][j]);
             }
-            if (row.size() == 1 && !row.contains('\u0000')){
+            if (row.size() == 1 && !row.contains(EMPTY)){
                 thereIsAWinner = true;
                 break;
             }
@@ -106,7 +116,7 @@ public class TicTacToe implements ITicTacToe {
             for (int j = 0; j < DIMENSION ; j++){
                 row.add(board[j][i]);
             }
-            if (row.size() == 1 && !row.contains('\u0000')){
+            if (row.size() == 1 && !row.contains(EMPTY)){
                 thereIsAWinner = true;
                 break;
             }
@@ -116,7 +126,7 @@ public class TicTacToe implements ITicTacToe {
 
     @Override
     public char winner() {
-        return checkTicTacToe() && !gameInProgress ? currentPlayerSymbol : 0;
+        return checkTicTacToe() && !gameInProgress ? currentPlayerSymbol : EMPTY;
     }
 
     @Override

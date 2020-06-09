@@ -23,12 +23,6 @@ public class ITicTacToeTest {
     }
 
     @Test
-    public void getBoard_TicTacToeBoardBeforeCreate_Null(){
-        var board = ticTacToe.getBoard();
-        Assert.assertNull(board);
-    }
-
-    @Test
     public void markMove_canAnEmptySpaceBeMarked_True(){
         ticTacToe.create();
         Assert.assertTrue(ticTacToe.markMove(0,0));
@@ -142,7 +136,6 @@ public class ITicTacToeTest {
 
     @Test
     public void winner_OWonAfterTheSixthTurn(){
-        ticTacToe.create();
         ticTacToe.markMove(0,0);
         ticTacToe.markMove(2,0);
         ticTacToe.markMove(0,1);
@@ -154,7 +147,6 @@ public class ITicTacToeTest {
 
     @Test
     public void draw_GameDrawAfterTheNinthTurn(){
-        ticTacToe.create();
         ticTacToe.markMove(0,0);
         ticTacToe.markMove(1,0);
         ticTacToe.markMove(2,0);
