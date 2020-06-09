@@ -1,2 +1,5 @@
 rootProject.name = 'TicTacToe-TDD'
+include 'src:main:untitled'
+findProject(':src:main:untitled')?.name = 'untitled'
+include 'backend'
 

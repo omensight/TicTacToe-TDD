@@ -1,6 +1,8 @@
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import tictactoe.backend.ITicTacToe;
+import tictactoe.backend.TicTacToe;
 
 import java.util.Random;
 

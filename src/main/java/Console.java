@@ -1,13 +1,14 @@
+import tictactoe.backend.ITicTacToe;
 import java.util.Scanner;
 
-public class Game {
+public class Console {
     private final ITicTacToe ticTacToe;
     private final static char ODD = 'X';
     private final static char EVEN = 'O';
     private char turn = ODD;
     private final Scanner scanner;
 
-    public Game(ITicTacToe ticTacToe){
+    public Console(ITicTacToe ticTacToe){
         this.ticTacToe = ticTacToe;
         scanner = new Scanner(System.in);
     }

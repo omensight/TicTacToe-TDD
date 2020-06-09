@@ -1,3 +1,5 @@
+package tictactoe.backend;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -66,7 +68,7 @@ public class TicTacToe implements ITicTacToe {
 
 
     private boolean checkDiagonalTicTacToe() {
-        boolean thereIsAWinner = false;
+        boolean thereIsAWinner;
         int rowLimit = DIMENSION-1;
         Character[] crescentDiagonal = new Character[3];
         Character[] decrescentDiagonal = new Character[3];
@@ -114,8 +116,7 @@ public class TicTacToe implements ITicTacToe {
 
     @Override
     public char winner() {
-        char winner = checkTicTacToe() && !gameInProgress ? currentPlayerSymbol : 0;
-        return winner;
+        return checkTicTacToe() && !gameInProgress ? currentPlayerSymbol : 0;
     }
 
     @Override
@@ -125,10 +126,14 @@ public class TicTacToe implements ITicTacToe {
 
     @Override
     public char[][] getBoard() {
-        char[][] copy = null;
+        char[][] copy = new char[DIMENSION][DIMENSION];
         if (board != null){
             copy = Arrays.copyOf(board, DIMENSION);
         }
+        for (int i = 0; i < DIMENSION; i++){
+            copy[i] = Arrays.copyOf(board[i], board[i].length);
+        }
+
         return copy;
     }
 }

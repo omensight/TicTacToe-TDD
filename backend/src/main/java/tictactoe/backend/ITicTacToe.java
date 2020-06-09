@@ -1,6 +1,8 @@
-interface ITicTacToe {
+package tictactoe.backend;
+
+public interface ITicTacToe {
     /**
-     * This method is used to create or initialize the TicTacToe game.
+     * This method is used to create or initialize the backend.TicTacToe game.
      */
     void create();
 
