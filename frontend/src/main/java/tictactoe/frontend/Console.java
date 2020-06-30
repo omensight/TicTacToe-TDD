@@ -1,15 +1,18 @@
+package tictactoe.frontend;
+
 import tictactoe.backend.ITicTacToe;
+
 import java.util.Scanner;
 
-public class Console {
+public class Console implements ITicTacToeUI {
     private final ITicTacToe ticTacToe;
-    private final static char ODD = 'X';
-    private final static char EVEN = 'O';
-    private char turn = ODD;
+    private final ITurnHandler<Character> mTurnHandler;
     private final Scanner scanner;
+    private boolean gameInProgress;
 
     public Console(ITicTacToe ticTacToe){
         this.ticTacToe = ticTacToe;
+        mTurnHandler = new TwoPlayerTurnHandler<>('X', 'O');
         scanner = new Scanner(System.in);
     }
     private void showMainMenu(){
@@ -21,52 +24,65 @@ public class Console {
         int option = scanner.nextInt();
         switch (option){
             case 1:
-                run();
+                gameInProgress = true;
+                ticTacToe.create();
+                mTurnHandler.reset();
+                startLoop();
                 break;
             case 2:
+                gameInProgress = false;
                 break;
             default:
                 System.out.println("Invalid option");
                 showMainMenu();
+                break;
         }
     }
 
-    public void run() {
-        ticTacToe.create();
-        while (!ticTacToe.draw() && !ticTacToe.checkTicTacToe()){
+    private void startLoop(){
+        while (!ticTacToe.draw() && !ticTacToe.checkTicTacToe() && gameInProgress){
             drawBoard();
             inputData();
             checkGameStatus();
         }
     }
 
+    @Override
+    public void run() {
+        showMainMenu();
+    }
+
     private void checkGameStatus() {
         if (ticTacToe.checkTicTacToe()){
             char winner = ticTacToe.winner();
             System.out.println("The winner is: " + winner);
+            drawBoard();
             showMainMenu();
         }else if (ticTacToe.draw()){
             System.out.println("There was a tie");
+            showMainMenu();
         }
     }
 
     private void inputData() {
-        System.out.println("It is the turn of " + turn);
+        System.out.println("It is the turn of " + mTurnHandler.getTurn());
         System.out.println("If you want to exit to the main menu, please enter 10 at any of the coordinates");
         System.out.println("Enter the x coordinate of the current turn");
         int x = scanner.nextInt();
         if (x == 10){
+            gameInProgress = false;
             showMainMenu();
             return;
         }
         System.out.println("Enter the y coordinate of the current turn");
         int y = scanner.nextInt();
         if (y == 10){
+            gameInProgress = false;
             showMainMenu();
             return;
         }
         if (ticTacToe.markMove(x, y)){
-            turn = turn == ODD ? EVEN : ODD;
+            mTurnHandler.changeTurn();
         }else {
             System.err.println("Invalid mark, please enter a correct one");
         }
@@ -86,5 +102,6 @@ public class Console {
             System.out.println();
         }
     }
+
 
 }

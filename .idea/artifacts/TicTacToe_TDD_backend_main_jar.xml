@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="TicTacToe-TDD.backend.main:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/TicTacToe_TDD_backend_main_jar</output-path>
+    <output-path>$PROJECT_DIR$/out/artifacts/TicTacToe_TDD</output-path>
     <root id="archive" name="TicTacToe-TDD.backend.main.jar">
       <element id="module-output" name="TicTacToe-TDD.backend.main" />
     </root>

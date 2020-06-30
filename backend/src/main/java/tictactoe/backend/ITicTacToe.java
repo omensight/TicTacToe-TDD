@@ -34,7 +34,7 @@ public interface ITicTacToe {
 
     /**
      * This method is used to get the board
-     * @return the board of the Tic Tac Toe Game where each box contains a <code>'X'</code> or an <code>'O'</code> or 
+     * @return the board of the Tic Tac Toe Game where each box contains a <code>'X'</code> or an <code>'O'</code> or '\u0000'
      */
     char[][] getBoard();
 }

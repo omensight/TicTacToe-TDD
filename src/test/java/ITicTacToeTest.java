@@ -87,7 +87,8 @@ public class ITicTacToeTest {
         ticTacToe.markMove(2,1);
         ticTacToe.markMove(0,1);
         ticTacToe.markMove(2,2);
-        Assert.assertTrue(ticTacToe.checkTicTacToe());
+        boolean thereIsTicTacToe = ticTacToe.checkTicTacToe();
+        Assert.assertTrue(thereIsTicTacToe);
     }
 
     @Test
@@ -131,7 +132,8 @@ public class ITicTacToeTest {
         ticTacToe.markMove(1,2);
         ticTacToe.markMove(0,0);
         ticTacToe.markMove(2,2);
-        Assert.assertEquals('X', ticTacToe.winner());
+        char winner = ticTacToe.winner();
+        Assert.assertEquals('X', winner);
     }
 
     @Test
@@ -142,7 +144,8 @@ public class ITicTacToeTest {
         ticTacToe.markMove(2,1);
         ticTacToe.markMove(1,1);
         ticTacToe.markMove(2,2);
-        Assert.assertEquals('O', ticTacToe.winner());
+        char winner = ticTacToe.winner();
+        Assert.assertEquals('O', winner);
     }
 
     @Test
@@ -156,7 +159,24 @@ public class ITicTacToeTest {
         ticTacToe.markMove(1,1);
         ticTacToe.markMove(0,2);
         ticTacToe.markMove(1,2);
+        Assert.assertTrue(ticTacToe.draw() && !ticTacToe.checkTicTacToe());
+    }
 
-        Assert.assertTrue(ticTacToe.draw());
+    @Test
+    public void draw_ThereIsADrawAfterTheEighthTurn_False(){
+        ticTacToe.markMove(0,0);
+        ticTacToe.markMove(1,1);
+        ticTacToe.markMove(0,2);
+        ticTacToe.markMove(0,1);
+        ticTacToe.markMove(2,1);
+        ticTacToe.markMove(1,0);
+        ticTacToe.markMove(1,2);
+        ticTacToe.markMove(2,0);
+        Assert.assertFalse(ticTacToe.draw());
+    }
+
+    @Test
+    public void a(){
+        Assert.assertFalse(ticTacToe.checkTicTacToe());
     }
 }

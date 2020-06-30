@@ -1,6 +1,15 @@
-plugins {
-    id 'java'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:6.0.0'
+    }
 }
+
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'
 
 group 'org.example'
 version '1.0-SNAPSHOT'
@@ -9,7 +18,13 @@ repositories {
     mavenCentral()
 }
 
+shadowJar{
+    minimize()
+}
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation project(":frontend")
     implementation project(":backend")
+//    implementation fileTree("lib")
 }

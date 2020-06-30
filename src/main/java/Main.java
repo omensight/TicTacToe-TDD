@@ -1,10 +1,17 @@
 import tictactoe.backend.ITicTacToe;
 import tictactoe.backend.TicTacToe;
+import tictactoe.frontend.Console;
+import tictactoe.frontend.GUI;
+import tictactoe.frontend.ITicTacToeUI;
+
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         ITicTacToe ticTacToe = new TicTacToe();
-        Console console = new Console(ticTacToe);
-        console.run();
+        ITicTacToeUI console = new Console(ticTacToe);
+        ITicTacToeUI ui = new GUI(ticTacToe);
+        ui.run();
+//        console.run();
+
     }
 }

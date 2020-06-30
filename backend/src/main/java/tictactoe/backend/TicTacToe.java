@@ -1,17 +1,19 @@
 package tictactoe.backend;
 
+import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Observer;
 import java.util.Set;
 
 public class TicTacToe implements ITicTacToe {
 
-    private char[][] board;
+    private final char[][] board;
     private final static int DIMENSION = 3;
     private final static int MAX_TURNS = DIMENSION * DIMENSION;
     private final static char ODD_SYMBOL = 'X';
     private final static char EVEN_SYMBOL = 'O';
-    private final static char EMPTY = '-';
+    private final static char EMPTY = '\u0000';
     private char currentPlayerSymbol;
     private boolean gameInProgress;
     private int turn;
@@ -76,18 +78,15 @@ public class TicTacToe implements ITicTacToe {
         return ticTacToe;
     }
 
-
     private boolean checkDiagonalTicTacToe() {
         boolean thereIsAWinner;
-        int rowLimit = DIMENSION-1;
-        Character[] crescentDiagonal = new Character[3];
-        Character[] decrescentDiagonal = new Character[3];
-        for (int i = 0, j = rowLimit; i <= rowLimit && j >= 0;i++,j--){
-            crescentDiagonal[i] = board[i][j];
-            decrescentDiagonal[i] = board[i][i];
+        Set<Character> crescentFrequency = new HashSet<>();
+        Set<Character> decrescentFrequency = new HashSet<>();
+        for (int i = 0, j = DIMENSION-1; i < DIMENSION && j >= 0;i++,j--){
+            crescentFrequency.add(board[i][j]);
+            decrescentFrequency.add(board[i][i]);
         }
-        Set<Character> crescentFrequency = new HashSet<>(Arrays.asList(crescentDiagonal));
-        Set<Character> decrescentFrequency = new HashSet<>(Arrays.asList(decrescentDiagonal));
+
         thereIsAWinner = crescentFrequency.size()==1 && !crescentFrequency.contains(EMPTY)
                 || decrescentFrequency.size()==1 && !decrescentFrequency.contains(EMPTY);
 
@@ -126,12 +125,16 @@ public class TicTacToe implements ITicTacToe {
 
     @Override
     public char winner() {
-        return checkTicTacToe() && !gameInProgress ? currentPlayerSymbol : EMPTY;
+        char winner = 0;
+        if (!gameInProgress && turn <= MAX_TURNS){
+            winner = turn % 2 == 0 ? EVEN_SYMBOL : ODD_SYMBOL;
+        }
+        return winner;
     }
 
     @Override
     public boolean draw() {
-        return turn >= MAX_TURNS && !checkTicTacToe();
+        return turn > MAX_TURNS && !checkTicTacToe();
     }
 
     @Override
