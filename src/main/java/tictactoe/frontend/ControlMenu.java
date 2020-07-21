@@ -1,9 +1,5 @@
 package tictactoe.frontend;
 
-
-import com.github.weisj.darklaf.components.DefaultButton;
-import com.github.weisj.darklaf.ui.button.DarkButtonUI;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;

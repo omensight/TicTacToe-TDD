@@ -1,6 +1,9 @@
 package tictactoe.backend;
 
-public interface ITicTacToe {
+import tictactoe.frontend.IObserver;
+import tictactoe.frontend.ITicTacToeUI;
+
+public interface ITicTacToe extends IObservable {
     /**
      * This method is used to create or initialize the backend.TicTacToe game.
      */

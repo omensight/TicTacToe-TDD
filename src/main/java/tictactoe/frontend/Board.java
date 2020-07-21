@@ -11,7 +11,7 @@ class Board extends JPanel{
     private final int boxWidth;
     private final ActionListener mActionListener;
 
-    public Board(int dimension, int boxWidth, ActionListener actionListener) throws HeadlessException {
+    public Board(int dimension, int boxWidth, ActionListener actionListener) {
         this.dimension = dimension;
         this.boxWidth = boxWidth;
         this.mActionListener = actionListener;

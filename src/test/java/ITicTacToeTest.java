@@ -175,8 +175,4 @@ public class ITicTacToeTest {
         Assert.assertFalse(ticTacToe.draw());
     }
 
-    @Test
-    public void a(){
-        Assert.assertFalse(ticTacToe.checkTicTacToe());
-    }
 }

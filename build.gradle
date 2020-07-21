@@ -24,7 +24,7 @@ shadowJar{
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    implementation project(":frontend")
-    implementation project(":backend")
+//    implementation project(":tictactoe.frontend")
+//    implementation project(":backend")
 //    implementation fileTree("lib")
 }

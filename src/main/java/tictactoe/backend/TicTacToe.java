@@ -1,10 +1,11 @@
 package tictactoe.backend;
 
+import tictactoe.frontend.ITicTacToeUI;
+
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Observer;
-import java.util.Set;
+import java.beans.PropertyChangeSupport;
+import java.util.*;
 
 public class TicTacToe implements ITicTacToe {
 
@@ -17,9 +18,12 @@ public class TicTacToe implements ITicTacToe {
     private char currentPlayerSymbol;
     private boolean gameInProgress;
     private int turn;
+    private PropertyChangeSupport support;
+
 
     public TicTacToe(){
         board = new char[DIMENSION][DIMENSION];
+        support = new PropertyChangeSupport(this);
         create();
     }
 
@@ -33,6 +37,11 @@ public class TicTacToe implements ITicTacToe {
         currentPlayerSymbol = ODD_SYMBOL;
         turn = 1;
         gameInProgress = true;
+        notifyEvent(new PropertyChangeEvent(this, "create", getBoard(), getBoard()));
+    }
+
+    private void notifyEvent(PropertyChangeEvent event) {
+        support.firePropertyChange(event);
     }
 
     private boolean verifyBoxAvailability(int row, int column) {
@@ -56,6 +65,7 @@ public class TicTacToe implements ITicTacToe {
             }else {
                 changeTurn();
             }
+            notifyEvent(new PropertyChangeEvent(this, "markMove", getBoard(), getBoard()));
         }
         return marked;
     }
@@ -74,6 +84,9 @@ public class TicTacToe implements ITicTacToe {
         }
         if (!ticTacToe){
             ticTacToe = checkVerticalWinner();
+        }
+        if (ticTacToe){
+            support.firePropertyChange(new PropertyChangeEvent(this, "winner", false, true));
         }
         return ticTacToe;
     }
@@ -148,5 +161,10 @@ public class TicTacToe implements ITicTacToe {
         }
 
         return copy;
+    }
+
+    @Override
+    public void addListener(ITicTacToeUI iTicTacToeUI) {
+        support.addPropertyChangeListener((PropertyChangeListener) iTicTacToeUI);
     }
 }

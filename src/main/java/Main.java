@@ -8,10 +8,9 @@ import tictactoe.frontend.ITicTacToeUI;
 public class Main {
     public static void main(String[] args) {
         ITicTacToe ticTacToe = new TicTacToe();
-        ITicTacToeUI console = new Console(ticTacToe);
         ITicTacToeUI ui = new GUI(ticTacToe);
+        ITicTacToeUI console = new Console(ticTacToe);
         ui.run();
-//        console.run();
-
+        console.run();
     }
 }
