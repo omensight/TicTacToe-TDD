@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdb1b35e-5bee-4391-a374-0a6083ee1862" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.1/fileContent/fileContent.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/TicTacToe_TDD_backend_main_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/TicTacToe_TDD_frontend_main_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ConsoleTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ITicTacToeTest.java" beforeDir="false" />
+    <list default="true" id="bdb1b35e-5bee-4391-a374-0a6083ee1862" name="Default Changelist" comment="Migrating to Maven">
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/backend/IObservable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/backend/IObservable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/backend/ITicTacToe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/backend/ITicTacToe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/backend/TicTacToe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/backend/TicTacToe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/controller/MyEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/controller/MyEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/Board.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/Console.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/ControlMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/IObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/IObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/ITicTacToeUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/ITicTacToeUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/ITurnHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/InputHelper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/Status.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/TwoPlayerTurnHandler.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,12 +88,43 @@
       <option name="presentableId" value="Default" />
       <updated>1595290854415</updated>
     </task>
+    <task id="LOCAL-00001" summary="Migrating to Maven">
+      <created>1595291490469</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1595291490470</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Migrating to Maven" />
+    <option name="LAST_COMMIT_MESSAGE" value="Migrating to Maven" />
   </component>
   <component name="WindowStateProjectService">
     <state x="461" y="165" key="SettingsEditor" timestamp="1595291305671">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1595291305671" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1595291492044">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1595291492044" />
+    <state x="342" y="181" key="new project wizard" timestamp="1595291418622">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="342" y="181" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1595291418622" />
   </component>
 </project>

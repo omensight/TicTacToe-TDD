@@ -1,170 +1,227 @@
 package tictactoe.backend;
 
 import tictactoe.frontend.ITicTacToeUI;
+import tictactoe.controller.MyEvent;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TicTacToe implements ITicTacToe {
-
     private final char[][] board;
-    private final static int DIMENSION = 3;
-    private final static int MAX_TURNS = DIMENSION * DIMENSION;
-    private final static char ODD_SYMBOL = 'X';
-    private final static char EVEN_SYMBOL = 'O';
-    private final static char EMPTY = '\u0000';
-    private char currentPlayerSymbol;
-    private boolean gameInProgress;
-    private int turn;
-    private PropertyChangeSupport support;
+    private final int dimension;
+    private final List<ITicTacToeUI> support;
+    private int numberMove;
+    private char turn;
+    private char winner;
 
-
-    public TicTacToe(){
-        board = new char[DIMENSION][DIMENSION];
-        support = new PropertyChangeSupport(this);
+    public TicTacToe() {
+        dimension = 3;
+        board = new char[dimension][dimension];
+        support = new ArrayList<>();
         create();
     }
 
     @Override
     public void create() {
-        for (int i = 0 ; i < DIMENSION; i++){
-            for (int j = 0 ; j < DIMENSION; j++){
-                board[i][j] = EMPTY;
+        numberMove = 0;
+        turn = 'X';
+        winner = '\0';
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
+                board[i][j] = '\0';
             }
         }
-        currentPlayerSymbol = ODD_SYMBOL;
-        turn = 1;
-        gameInProgress = true;
-        notifyEvent(new PropertyChangeEvent(this, "create", getBoard(), getBoard()));
-    }
-
-    private void notifyEvent(PropertyChangeEvent event) {
-        support.firePropertyChange(event);
-    }
-
-    private boolean verifyBoxAvailability(int row, int column) {
-        boolean isAvailable = false;
-        boolean xBetweenTheBounds = row >= 0 && row < DIMENSION;
-        boolean yBetweenTheBounds = column >= 0 && column < DIMENSION;
-        if (xBetweenTheBounds && yBetweenTheBounds){
-            isAvailable = board[row][column] == EMPTY;
-        }
-        return isAvailable;
+        notifyListener(new MyEvent(this, "create", false, true));
     }
 
     @Override
     public boolean markMove(int row, int column) {
-        boolean marked = false;
-        if (verifyBoxAvailability(row,column) && gameInProgress){
-            board[row][column] = currentPlayerSymbol;
-            marked = true;
-            if (checkTicTacToe()){
-                gameInProgress = false;
-            }else {
-                changeTurn();
+        boolean mark = false;
+        if (!checkTicTacToe()) {
+            if (checkLimits(row) && checkLimits(column)) {
+                if (markBox(row, column)) {
+                    mark = true;
+                    numberMove++;
+                    changeTurn();
+                    notifyListener(new MyEvent(this, "markMove", false, true));
+                }
             }
-            notifyEvent(new PropertyChangeEvent(this, "markMove", getBoard(), getBoard()));
         }
-        return marked;
-    }
-
-    private void changeTurn() {
-        turn++;
-        currentPlayerSymbol = turn%2 == 0 ? EVEN_SYMBOL : ODD_SYMBOL;
+        return mark;
     }
 
     @Override
     public boolean checkTicTacToe() {
-        boolean ticTacToe;
-        ticTacToe = checkDiagonalTicTacToe();
-        if (!ticTacToe){
-            ticTacToe = checkHorizontalTicTacToe();
-        }
-        if (!ticTacToe){
-            ticTacToe = checkVerticalWinner();
-        }
-        if (ticTacToe){
-            support.firePropertyChange(new PropertyChangeEvent(this, "winner", false, true));
-        }
-        return ticTacToe;
-    }
-
-    private boolean checkDiagonalTicTacToe() {
-        boolean thereIsAWinner;
-        Set<Character> crescentFrequency = new HashSet<>();
-        Set<Character> decrescentFrequency = new HashSet<>();
-        for (int i = 0, j = DIMENSION-1; i < DIMENSION && j >= 0;i++,j--){
-            crescentFrequency.add(board[i][j]);
-            decrescentFrequency.add(board[i][i]);
-        }
-
-        thereIsAWinner = crescentFrequency.size()==1 && !crescentFrequency.contains(EMPTY)
-                || decrescentFrequency.size()==1 && !decrescentFrequency.contains(EMPTY);
-
-        return thereIsAWinner;
-    }
-
-    private boolean checkHorizontalTicTacToe() {
-        boolean thereIsAWinner = false;
-        for (int i = 0; i < DIMENSION ; i++){
-            Set<Character> row = new HashSet<>();
-            for (int j = 0; j < DIMENSION ; j++){
-                row.add(board[i][j]);
-            }
-            if (row.size() == 1 && !row.contains(EMPTY)){
-                thereIsAWinner = true;
-                break;
+        boolean thereIs = false;
+        if (numberMove >= 5) {
+            if (rowWinner() || columnWinner() || diagonalWinner()) {
+                thereIs = true;
+                notifyListener(new MyEvent(this, "winner", false, true));
             }
         }
-        return thereIsAWinner;
-    }
-
-    private boolean checkVerticalWinner() {
-        boolean thereIsAWinner = false;
-        for (int i = 0; i < DIMENSION ; i++){
-            Set<Character> row = new HashSet<>();
-            for (int j = 0; j < DIMENSION ; j++){
-                row.add(board[j][i]);
-            }
-            if (row.size() == 1 && !row.contains(EMPTY)){
-                thereIsAWinner = true;
-                break;
-            }
-        }
-        return thereIsAWinner;
+        return thereIs;
     }
 
     @Override
     public char winner() {
-        char winner = 0;
-        if (!gameInProgress && turn <= MAX_TURNS){
-            winner = turn % 2 == 0 ? EVEN_SYMBOL : ODD_SYMBOL;
-        }
         return winner;
     }
 
     @Override
     public boolean draw() {
-        return turn > MAX_TURNS && !checkTicTacToe();
+        boolean is = false;
+        if (finish() && winner == '\0') {
+            is = true;
+        }
+        return is;
     }
 
     @Override
     public char[][] getBoard() {
-        char[][] copy = new char[DIMENSION][DIMENSION];
-        if (board != null){
-            copy = Arrays.copyOf(board, DIMENSION);
+        char[][] boardShape = new char[dimension][dimension];
+        for (int i = 0; i < dimension; i++) {
+            System.arraycopy(board[i], 0, boardShape[i], 0, dimension);
         }
-        for (int i = 0; i < DIMENSION; i++){
-            copy[i] = Arrays.copyOf(board[i], board[i].length);
-        }
+        return boardShape;
+    }
 
-        return copy;
+    private boolean checkLimits(int value) {
+        boolean check = false;
+        int limitMin = 0;
+        int limitMax = 3;
+        if (value >= limitMin && value < limitMax) {
+            check = true;
+        }
+        return check;
+    }
+
+    private boolean markBox(int row, int column) {
+        boolean mark = false;
+        if (checkBox(row, column)) {
+            board[row][column] = turn;
+            mark = true;
+        }
+        return mark;
+    }
+
+    private boolean checkBox(int row, int column) {
+        boolean status = false;
+        if ('\0' == board[row][column]) {
+            status = true;
+        }
+        return status;
+    }
+
+    private void changeTurn() {
+        if (turn == 'X') turn = 'O';
+        else turn = 'X';
+    }
+
+    private boolean rowWinner() {
+        boolean earner = false;
+        int counterX;
+        int counterO;
+        for (int i = 0; i < dimension; i++) {
+            counterX = 0;
+            counterO = 0;
+            for (int j = 0; j < dimension; j++) {
+                if (board[i][j] == 'X') {
+                    counterX++;
+                }
+                if (board[i][j] == 'O') {
+                    counterO++;
+                }
+            }
+            if (counterX == 3 || counterO == 3) {
+                getWinner(counterX, counterO);
+                earner = true;
+            }
+        }
+        return earner;
+    }
+
+    private boolean columnWinner() {
+        boolean earner = false;
+        int counterX;
+        int counterO;
+        for (int i = 0; i < dimension; i++) {
+            counterX = 0;
+            counterO = 0;
+            for (int j = 0; j < dimension; j++) {
+                if (board[j][i] == 'X') {
+                    counterX++;
+                }
+                if (board[j][i] == 'O') {
+                    counterO++;
+                }
+            }
+            if (counterX == 3 || counterO == 3) {
+                getWinner(counterX, counterO);
+                earner = true;
+            }
+        }
+        return earner;
+    }
+
+    private boolean diagonalWinner() {
+        boolean earner = false;
+        int counterX = 0;
+        int counterO = 0;
+        for (int i = 0; i < 3; i++) {
+            if (board[i][i] == 'X') {
+                counterX++;
+            }
+            if (board[i][i] == 'O') {
+                counterO++;
+            }
+        }
+        if (counterX == 3 || counterO == 3) {
+            getWinner(counterX, counterO);
+            earner = true;
+        }
+        counterX = 0;
+        counterO = 0;
+        for (int i = 2; i >= 0; i--) {
+            if (board[i][2 - i] == 'X') {
+                counterX++;
+            }
+            if (board[i][2 - i] == 'O') {
+                counterO++;
+            }
+        }
+        if (counterX == 3 || counterO == 3) {
+            getWinner(counterX, counterO);
+            earner = true;
+        }
+        return earner;
+    }
+
+    private void getWinner(int counterX, int counterO) {
+        if (counterX == 3) {
+            winner = 'X';
+        }
+        if (counterO == 3) {
+            winner = 'O';
+        }
+    }
+
+    private boolean finish() {
+        boolean full = false;
+        int numberBox = dimension * dimension;
+        if (numberBox == numberMove) {
+            full = true;
+        }
+        return full;
+    }
+
+    private void notifyListener(MyEvent event) {
+        for (ITicTacToeUI ui : support) {
+            ui.update(event);
+        }
     }
 
     @Override
-    public void addListener(ITicTacToeUI iTicTacToeUI) {
-        support.addPropertyChangeListener((PropertyChangeListener) iTicTacToeUI);
+    public void addListener(ITicTacToeUI tictactoeUI) {
+        support.add(tictactoeUI);
     }
 }

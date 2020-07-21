@@ -1,5 +1,7 @@
 package tictactoe.frontend;
 
-public interface IObserver {
+import tictactoe.controller.MyEvent;
 
+public interface IObserver{
+    void update(MyEvent evt);
 }

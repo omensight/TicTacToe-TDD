@@ -4,13 +4,14 @@ import tictactoe.frontend.Console;
 import tictactoe.frontend.GUI;
 import tictactoe.frontend.ITicTacToeUI;
 
-
 public class Main {
+
     public static void main(String[] args) {
-        ITicTacToe ticTacToe = new TicTacToe();
-        ITicTacToeUI ui = new GUI(ticTacToe);
+        ITicTacToe ticTacToe  = new TicTacToe();
         ITicTacToeUI console = new Console(ticTacToe);
-        ui.run();
+        ITicTacToeUI gui = new GUI(ticTacToe);
+
+        gui.run();
         console.run();
     }
 }

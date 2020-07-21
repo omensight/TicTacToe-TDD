@@ -2,6 +2,6 @@ package tictactoe.backend;
 
 import tictactoe.frontend.ITicTacToeUI;
 
-interface IObservable {
+public interface IObservable{
     void addListener(ITicTacToeUI iTicTacToeUI);
 }

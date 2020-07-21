@@ -1,140 +1,132 @@
 package tictactoe.frontend;
 
 import tictactoe.backend.ITicTacToe;
+import tictactoe.controller.MyEvent;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.InputStreamReader;
-import java.util.Scanner;
+public class Console implements ITicTacToeUI {
+    private final ITicTacToe game;
+    private final Helper helper;
+    private String piece;
 
-public class Console implements ITicTacToeUI, IObserver, PropertyChangeListener {
-    private final ITicTacToe ticTacToe;
-    private final tictactoe.frontend.ITurnHandler<Character> mTurnHandler;
-    private Scanner scanner;
-    private Status status;
-    private InputHelper inputHelper;
-    private boolean running;
-
-    public Console(ITicTacToe ticTacToe){
-        System.out.println("Main" + Thread.currentThread().getName());
-        this.ticTacToe = ticTacToe;
-        mTurnHandler = new tictactoe.frontend.TwoPlayerTurnHandler<>('X', 'O');
-        InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-        scanner = new Scanner(inputStreamReader);
-        status = Status.NOT_STARTED;
-        inputHelper = new InputHelper();
-        running = true;
-    }
-
-    private void loop(){
-        while (running){
-            String line = scanner.nextLine();
-            int parameter = inputHelper.parseInt(line);
-            if (status == Status.NOT_STARTED){
-
-            }else if (status == Status.PLAYING){
-                performMove(parameter);
-            }else if (status == Status.MAIN_MENU){
-                performMainMenuAction(parameter);
-            }
-        }
-    }
-
-    private void performMainMenuAction(int move) {
-        switch (move){
-            case 1:{
-                status = Status.PLAYING;
-                ticTacToe.create();
-                break;
-            }
-            case 2:{
-                status = Status.MAIN_MENU;
-                running = false;
-                System.exit(0);
-                break;
-            }
-        }
-    }
-
-    private void performMove(int option) {
-        if (option >8){
-            status = Status.MAIN_MENU;
-            showMainMenu();
-        }else {
-            int x = option/3;
-            int y = option%3;
-            if (!ticTacToe.markMove(x,y)){
-                drawBoard();
-                showPlayingOptions();
-            }
-            ticTacToe.checkTicTacToe();
-        }
-    }
-
-    private void showMainMenu(){
-        System.out.println("---------------------------------------\n");
-        System.out.println("What would you like to do?");
-        System.out.println("1. Play");
-        System.out.println("2. Exit");
-        System.out.print("Your selection: ");
+    public Console(ITicTacToe game) {
+        this.game = game;
+        this.game.addListener(this);
+        helper = new Helper();
+        piece = "X";
     }
 
     @Override
-    public void run() {
-        ticTacToe.addListener(this);
-        showMainMenu();
-        status = Status.MAIN_MENU;
-        loop();
+    public void run(){
+        setLabelsGameInit();
+        play();
     }
 
+    @Override
+    public void update(MyEvent event) {
+        if(event.getPropertyName().equals("markMove")){
+            changeLabelTurn();
+            showBoardGame();
+            checkStatusGame();
+        }
+        if(event.getPropertyName().equals("create")){
+            setLabelsMessagesOptionsInit();
+        }
 
-    private void drawBoard(){
+    }
+
+    private void play() {
+        setLabelsMessagesOptionsInit();
+        while (true) {
+            movePlayer();
+        }
+    }
+
+    private void setLabelsGameInit(){
         System.out.println();
-        System.out.println("----------- New Turn -----------");
-        char[][] board =ticTacToe.getBoard();
-        for (char[] chars : board) {
-            for (char symbol : chars) {
-                if (symbol == 0) {
-                    System.out.print('-');
+        System.out.println(helper.colorYellow() + "\n ----------- TIC TAC TOE 1.0 ----------- \n" + helper.resetColor());
+    }
+
+    private void setLabelsMessagesOptionsInit(){
+        piece = "X";
+        System.out.println(helper.colorBlue() + "\n\nChoose a number from 1 to 9 for play" + helper.resetColor());
+        System.out.println(helper.colorGreen() + "> Press 10 new game \n> Press 11 to the exit game" + helper.resetColor());
+        showBoardGame();
+        System.out.print("- enter the play number " + piece + " : ");
+    }
+
+    private void movePlayer(){
+        int number = helper.enterNumber(11, "play number");
+        if (number == 10){
+            game.create();
+        }else{
+            if (number == 11){
+                System.out.println(helper.messageFinishGame());
+                System.exit(0);
+            }else {
+                if (!game.markMove(convertRow(number),convertColumn(number))){
+                    System.out.println(helper.colorRed() + "***play not valid, box already checked" + helper.resetColor());
+                    System.out.print("- re-enter the play number: ");
+                    movePlayer();
+                }
+            }
+        }
+    }
+
+    private void checkStatusGame(){
+        if(game.checkTicTacToe()){
+            String winner = String.valueOf(game.winner());
+            System.out.println(helper.messageWinnerGame(winner) + "\n");
+            starSubMenu();
+        }else{
+            if (game.draw()){
+                System.out.println(helper.messageDrawGame() + "\n");
+                starSubMenu();
+            }else{
+                System.out.print("- enter the play number " + piece + " : ");
+            }
+        }
+    }
+
+    private void starSubMenu() {
+        System.out.println(helper.colorGreen() + "> Press 10 new game \n> Press 11 to the exit game" + helper.resetColor() + "\n");
+        System.out.print("- enter the option: ");
+    }
+
+    private void showBoardGame() {
+        char[][] boardPlay = game.getBoard();
+        System.out.println();
+        for (int i = 0; i < boardPlay.length; i++) {
+            char[] chars = boardPlay[i];
+            for (int j = 0; j < boardPlay.length; j++) {
+                char box = chars[j];
+                if (box == 'X') {
+                    System.out.print("[ " + helper.colorPurple() + box + helper.resetColor() + " ]");
                 } else {
-                    System.out.print(symbol);
+                    if (box == 'O') {
+                        System.out.print("[ " + helper.colorCyan() + box + helper.resetColor() + " ]");
+                    } else {
+                        System.out.print("[   ]");
+                    }
                 }
             }
             System.out.println();
         }
+        System.out.println();
     }
 
-    private void showPlayingOptions() {
-        System.out.println("It is the turn of " + mTurnHandler.getTurn());
-        System.out.println("[0-8] Mark");
-        System.out.println("[Other] Main Menu");
-        System.out.print("Select: ");
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        switch (evt.getPropertyName()){
-            case "create":{
-                status = Status.PLAYING;
-                mTurnHandler.reset();
-                drawBoard();
-                showPlayingOptions();
-                break;
-            }
-            case "markMove": {
-                status = Status.PLAYING;
-                mTurnHandler.changeTurn();
-                drawBoard();
-                showPlayingOptions();
-                break;
-            }
-            case "winner":{
-                status = Status.MAIN_MENU;
-                System.out.println("The winner is: " + ticTacToe.winner());
-                showMainMenu();
-                break;
-            }
-
+    private void changeLabelTurn(){
+        if(piece.equals("X")){
+            piece = "O";
+        }else{
+            piece = "X";
         }
+    }
+
+    private int convertRow(int number){
+        return (number - 1) / 3;
+    }
+
+    private int convertColumn(int number){
+        return (number - 1) % 3;
     }
 }
