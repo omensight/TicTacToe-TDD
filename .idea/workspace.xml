@@ -20,21 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdb1b35e-5bee-4391-a374-0a6083ee1862" name="Default Changelist" comment="Migrating to Maven">
+      <change afterPath="$PROJECT_DIR$/src/test/java/HelperTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/TicTacToeTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/UltimateTicTacToeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/backend/IObservable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/backend/IObservable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/backend/ITicTacToe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/backend/ITicTacToe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/backend/TicTacToe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/backend/TicTacToe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/controller/MyEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/controller/MyEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/Board.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/backend/UltimateTicTacToe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/backend/UltimateTicTacToe.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/Console.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/ControlMenu.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/GUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/IObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/IObserver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/ITicTacToeUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/ITicTacToeUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/ITurnHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/InputHelper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/Status.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tictactoe/frontend/TwoPlayerTurnHandler.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,13 +51,22 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="GitIgnore" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/test/java" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.33957845" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
     <property name="show.unlinked.gradle.project.popup" value="true" />
   </component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\mijae\IdeaProjects\TicTacToe-TDD - Copy\src\test\java" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="TicTacToe-TDD_-_Copy" />
@@ -71,9 +74,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UltimateTicTacToeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TicTacToe-TDD_-_Copy" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="UltimateTicTacToeTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.UltimateTicTacToeTest" />
       </list>
     </recent_temporary>
   </component>
@@ -95,7 +108,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595291490470</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Migrating to Maven">
+      <created>1595291904238</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1595291904238</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -108,23 +128,104 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Migrating to Maven" />
     <option name="LAST_COMMIT_MESSAGE" value="Migrating to Maven" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="461" y="165" key="SettingsEditor" timestamp="1595291305671">
+    <state x="92" y="92" width="1736" height="856" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1595340879338">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1595291305671" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1595291492044">
+    <state x="92" y="92" width="1736" height="856" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1595340879338" />
+    <state x="765" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1595341159980">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1595291492044" />
+    <state x="765" y="226" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1595341159980" />
+    <state x="743" y="385" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1595340633446">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="743" y="385" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1595340633446" />
+    <state x="784" y="422" key="Github.CreateGistDialog" timestamp="1595352977589">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="784" y="422" key="Github.CreateGistDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1595352977589" />
+    <state width="644" height="912" key="GridCell.Tab.0.bottom" timestamp="1595480200404">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="644" height="912" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1595480200404" />
+    <state width="644" height="912" key="GridCell.Tab.0.center" timestamp="1595480200403">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="644" height="912" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1595480200403" />
+    <state width="644" height="912" key="GridCell.Tab.0.left" timestamp="1595480200403">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="644" height="912" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1595480200403" />
+    <state width="644" height="912" key="GridCell.Tab.0.right" timestamp="1595480200403">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="644" height="912" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1595480200403" />
+    <state width="1877" height="237" key="GridCell.Tab.1.bottom" timestamp="1595446806655">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="237" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1595446806655" />
+    <state width="1877" height="237" key="GridCell.Tab.1.center" timestamp="1595446806654">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="237" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1595446806654" />
+    <state width="1877" height="237" key="GridCell.Tab.1.left" timestamp="1595446806654">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="237" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1595446806654" />
+    <state width="1877" height="237" key="GridCell.Tab.1.right" timestamp="1595446806654">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="237" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1595446806654" />
+    <state x="461" y="165" key="SettingsEditor" timestamp="1595292950885">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1595292950885" />
+    <state width="498" height="446" key="SwitcherDM" timestamp="1595345609803">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="498" height="446" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1595345609803" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1595291924378">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1595291924378" />
+    <state x="442" y="179" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1595355168787">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="442" y="179" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1595355168787" />
     <state x="342" y="181" key="new project wizard" timestamp="1595291418622">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="342" y="181" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1595291418622" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1595372090850">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1595372090850" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1595391404050">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1595391404050" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/UltimateTicTacToeTest.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tictactoe/backend/UltimateTicTacToe.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

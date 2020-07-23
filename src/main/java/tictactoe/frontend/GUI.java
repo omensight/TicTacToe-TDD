@@ -7,16 +7,17 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.basic.BasicBorders;
+import java.awt.*;
 
 public class GUI extends JFrame implements ITicTacToeUI{
     private final ITicTacToe game;
     private final Helper helper;
-    private JButton[] button;
+    private final static int WIDTH = 9;
+    private final static int TOTAL_LENGTH = WIDTH*WIDTH;
+    private JButton[] buttons;
     private JLabel labelTurn;
 
     public GUI(ITicTacToe game) {
@@ -63,19 +64,21 @@ public class GUI extends JFrame implements ITicTacToeUI{
 
     private void startButtons() {
         JPanel panelButtons = new JPanel();
-        panelButtons.setLayout(new GridLayout(3,3,1,1));
+        panelButtons.setLayout(new GridLayout(9,9,1,1));
         //panelButtons.setBackground(Color.BLACK);
-        button = new JButton[10];
-        for (int i = 1; i < 10; i++) {
-            button[i] = new JButton();
-            button[i].setActionCommand(Integer.toString(i));
-            button[i].setBackground(Color.WHITE);
-            button[i].setFocusPainted(false);
-            button[i].setFont(new Font("Dialogo", Font.BOLD,50));
-            button[i].setPreferredSize(new Dimension(100,100));
-            button[i].setToolTipText("Click to mark");
-            button[i].addActionListener(event -> play(event.getActionCommand()));
-            panelButtons.add(button[i]);
+        buttons = new JButton[TOTAL_LENGTH];
+        for (int i = 0; i < TOTAL_LENGTH; i++) {
+            JButton button = new JButton();
+            button.setActionCommand(Integer.toString(i));
+            button.setBackground(Color.WHITE);
+            button.setFocusPainted(false);
+            button.setFont(new Font("Dialogo", Font.BOLD,20));
+            button.setBorder(new LineBorder(null));
+//            button.setPreferredSize(new Dimension(100,100));
+            button.setToolTipText("Click to mark");
+            button.addActionListener(event -> play(event.getActionCommand()));
+            buttons[i] = button;
+            panelButtons.add(buttons[i]);
         }
         add(panelButtons);
     }
@@ -94,7 +97,7 @@ public class GUI extends JFrame implements ITicTacToeUI{
         int number = Integer.parseInt(numberPlay);
         if(!game.checkTicTacToe()){
             if(!game.markMove(convertRow(number),convertColumn(number))) {
-                button[number].setFocusPainted(true);
+                buttons[number].setFocusPainted(true);
             }
         }
     }
@@ -114,21 +117,23 @@ public class GUI extends JFrame implements ITicTacToeUI{
 
     public void updateBoard() {
         changeLabelTurn();
-        for (int i = 1; i < 10; i++) {
+        for (int i = 0; i < TOTAL_LENGTH; i++) {
             setButtonMove(i);
         }
     }
 
     private void setButtonMove(int number){
         String piece = getBox(convertRow(number),convertColumn(number));
-        button[number].setText(piece);
+        buttons[number].setText(piece);
         if(piece.equals("X")){
-            button[number].setForeground(Color.BLUE);
+            Color xColor = Color.decode("#AC87B4");
+            buttons[number].setForeground(xColor);
         }else{
             if(piece.equals("O")){
-                button[number].setForeground(Color.MAGENTA);
+                Color oColor = Color.decode("#289395");
+                buttons[number].setForeground(oColor);
             }else{
-                button[number].setEnabled(true);
+                buttons[number].setEnabled(true);
             }
         }
     }
@@ -146,13 +151,13 @@ public class GUI extends JFrame implements ITicTacToeUI{
 
     private void setButtonEnable(boolean status) {
         for (int i = 1; i < 10; i++) {
-            button[i].setEnabled(status);
+            buttons[i].setEnabled(status);
         }
     }
 
     private void setButtonEmpty() {
         for (int i = 1; i < 10; i++) {
-            button[i].setText("");
+            buttons[i].setText("");
         }
     }
 
@@ -165,11 +170,10 @@ public class GUI extends JFrame implements ITicTacToeUI{
     }
 
     private int convertRow(int number){
-        return (number - 1) / 3;
+        return (number) / 9;
     }
 
     private int convertColumn(int number){
-        return (number - 1) % 3;
+        return (number) % 9;
     }
 }
-

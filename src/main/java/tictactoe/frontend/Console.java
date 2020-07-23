@@ -123,10 +123,10 @@ public class Console implements ITicTacToeUI {
     }
 
     private int convertRow(int number){
-        return (number - 1) / 3;
+        return (number - 1) / 9;
     }
 
     private int convertColumn(int number){
-        return (number - 1) % 3;
+        return (number - 1) % 9;
     }
 }
