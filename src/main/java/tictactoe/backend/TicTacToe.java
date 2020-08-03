@@ -1,5 +1,7 @@
 package tictactoe.backend;
 
+import tictactoe.controller.ITurnHandler;
+import tictactoe.controller.TwoPlayerTurnHandler;
 import tictactoe.frontend.ITicTacToeUI;
 import tictactoe.controller.MyEvent;
 
@@ -11,20 +13,32 @@ public class TicTacToe implements ITicTacToe {
     private final int dimension;
     private final List<ITicTacToeUI> support;
     private int numberMove;
-    private char turn;
+//    private char turn;
     private char winner;
+    private final ITurnHandler<Character> turnHandler;
+    private final boolean ableToChangeTurn;
+    private final static int MIN_WINNER_MOVES = 3;
 
-    public TicTacToe() {
+    public TicTacToe(ITurnHandler<Character> turnHandler) {
+        this.turnHandler = turnHandler;
+        ableToChangeTurn = false;
         dimension = 3;
         board = new char[dimension][dimension];
         support = new ArrayList<>();
         create();
     }
 
+    public TicTacToe() {
+        this.turnHandler = new TwoPlayerTurnHandler<>('X', 'O');
+        ableToChangeTurn = true;
+        dimension = 3;
+        board = new char[dimension][dimension];
+        support = new ArrayList<>();
+        create();
+    }
     @Override
     public void create() {
         numberMove = 0;
-        turn = 'X';
         winner = '\0';
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
@@ -53,7 +67,7 @@ public class TicTacToe implements ITicTacToe {
     @Override
     public boolean checkTicTacToe() {
         boolean thereIs = false;
-        if (numberMove >= 5) {
+        if (numberMove >= MIN_WINNER_MOVES) {
             if (rowWinner() || columnWinner() || diagonalWinner()) {
                 thereIs = true;
                 notifyListener(new MyEvent(this, "winner", false, true));
@@ -98,7 +112,7 @@ public class TicTacToe implements ITicTacToe {
     private boolean markBox(int row, int column) {
         boolean mark = false;
         if (checkBox(row, column)) {
-            board[row][column] = turn;
+            board[row][column] = turnHandler.getTurn();
             mark = true;
         }
         return mark;
@@ -113,8 +127,9 @@ public class TicTacToe implements ITicTacToe {
     }
 
     private void changeTurn() {
-        if (turn == 'X') turn = 'O';
-        else turn = 'X';
+        if (ableToChangeTurn){
+            turnHandler.changeTurn();
+        }
     }
 
     private boolean rowWinner() {

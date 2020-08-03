@@ -4,11 +4,15 @@ import org.junit.Before;
 import org.junit.Test;
 import tictactoe.backend.ITicTacToe;
 import tictactoe.backend.TicTacToe;
+import tictactoe.controller.TwoPlayerTurnHandler;
 
 public class TicTacToeTest {
 
+    private ITicTacToe ticTacToe;
+
     @Before
     public void setUp() {
+        ticTacToe = new TicTacToe();
     }
 
     @After
@@ -17,14 +21,12 @@ public class TicTacToeTest {
 
     @Test
     public void createBoard(){
-        ITicTacToe ticTacToe = new TicTacToe();
         ticTacToe.create();
         Assert.assertNotNull(ticTacToe.getBoard());
     }
 
     @Test
     public void markMoveXValid(){
-        ITicTacToe ticTacToe = new TicTacToe();
         ticTacToe.create();
         boolean status = ticTacToe.markMove(1,1);
         Assert.assertTrue(status);
@@ -32,7 +34,6 @@ public class TicTacToeTest {
 
     @Test
     public void markMoveOValid(){
-        ITicTacToe ticTacToe = new TicTacToe();
         ticTacToe.create();
         ticTacToe.markMove(0,0);
         boolean status = ticTacToe.markMove(1,1);
@@ -41,7 +42,6 @@ public class TicTacToeTest {
 
     @Test
     public void markMoveXRemarkNotValid(){
-        ITicTacToe ticTacToe = new TicTacToe();
         ticTacToe.create();
         ticTacToe.markMove(1,2);
         ticTacToe.markMove(2,2);
@@ -51,7 +51,6 @@ public class TicTacToeTest {
 
     @Test
     public void markMoveORemarkNotValid(){
-        ITicTacToe ticTacToe = new TicTacToe();
         ticTacToe.create();
         ticTacToe.markMove(1,2);
         boolean status = ticTacToe.markMove(1,2);
@@ -60,7 +59,7 @@ public class TicTacToeTest {
 
     @Test
     public void markMoveXLimitRowAndColumnNotValid(){
-        ITicTacToe ticTacToe = new TicTacToe();
+        
         ticTacToe.create();
         boolean status = ticTacToe.markMove(5,3);
         Assert.assertFalse(status);
@@ -68,7 +67,7 @@ public class TicTacToeTest {
 
     @Test
     public void checkTicTacToeRowValid(){
-        ITicTacToe ticTacToe = new TicTacToe();
+        
         ticTacToe.create();
         ticTacToe.markMove(1,0);
         ticTacToe.markMove(0,1);
@@ -81,7 +80,7 @@ public class TicTacToeTest {
 
     @Test
     public void checkTicTacToeColumnValid(){
-        ITicTacToe ticTacToe = new TicTacToe();
+        
         ticTacToe.create();
         ticTacToe.markMove(0,1);
         ticTacToe.markMove(0,2);
@@ -94,7 +93,7 @@ public class TicTacToeTest {
 
     @Test
     public void checkTicTacToeDiagonalValid(){
-        ITicTacToe ticTacToe = new TicTacToe();
+        
         ticTacToe.create();
         ticTacToe.markMove(0,2);
         ticTacToe.markMove(0,0);
@@ -107,7 +106,7 @@ public class TicTacToeTest {
 
     @Test
     public void checkTicTacToeNotValid(){
-        ITicTacToe ticTacToe = new TicTacToe();
+        
         ticTacToe.create();
         ticTacToe.markMove(0,2);
         ticTacToe.markMove(1,1);
@@ -120,7 +119,7 @@ public class TicTacToeTest {
 
     @Test
     public void winnerXRow(){
-        ITicTacToe ticTacToe = new TicTacToe();
+        
         ticTacToe.create();
         ticTacToe.markMove(2,0);
         ticTacToe.markMove(0,1);
@@ -134,7 +133,7 @@ public class TicTacToeTest {
 
     @Test
     public void winnerXColumn(){
-        ITicTacToe ticTacToe = new TicTacToe();
+        
         ticTacToe.create();
         ticTacToe.markMove(0,0);
         ticTacToe.markMove(0,2);
@@ -149,7 +148,7 @@ public class TicTacToeTest {
 
     @Test
     public void winnerXDiagonal(){
-        ITicTacToe ticTacToe = new TicTacToe();
+        
         ticTacToe.create();
         ticTacToe.markMove(0,0);
         ticTacToe.markMove(0,2);
@@ -163,7 +162,7 @@ public class TicTacToeTest {
 
     @Test
     public void drawValid(){
-        ITicTacToe ticTacToe = new TicTacToe();
+        
         ticTacToe.create();
         ticTacToe.markMove(0,0);
         ticTacToe.markMove(0,1);
@@ -180,7 +179,7 @@ public class TicTacToeTest {
 
     @Test
     public void drawNotValid(){
-        ITicTacToe ticTacToe = new TicTacToe();
+        
         ticTacToe.create();
         ticTacToe.markMove(0,0);
         ticTacToe.markMove(0,1);
@@ -194,7 +193,7 @@ public class TicTacToeTest {
 
     @Test
     public void getBoardEmpty(){
-        ITicTacToe ticTacToe = new TicTacToe();
+        
         ticTacToe.create();
         char[][] board1 = {{'\0','\0','\0'},{'\0','\0','\0'},{'\0','\0','\0'}};
         char[][] board2 = ticTacToe.getBoard();
@@ -203,7 +202,7 @@ public class TicTacToeTest {
 
     @Test
     public void getBoardHalfFull(){
-        ITicTacToe ticTacToe = new TicTacToe();
+        
         ticTacToe.create();
         ticTacToe.markMove(0,0);
         ticTacToe.markMove(2,1);
@@ -214,23 +213,5 @@ public class TicTacToeTest {
         char[][] board2 = ticTacToe.getBoard();
         Assert.assertArrayEquals(board1, board2);
     }
-
-    /*@Test
-    public void getBoardFull(){
-        ITicTacToe ticTacToe = new TicTacToe();
-        ticTacToe.create();
-        ticTacToe.markMove(0,0);
-        ticTacToe.markMove(0,1);
-        ticTacToe.markMove(0,2);
-        ticTacToe.markMove(1,0);
-        ticTacToe.markMove(1,2);
-        ticTacToe.markMove(1,1);
-        ticTacToe.markMove(2,0);
-        ticTacToe.markMove(2,2);
-        ticTacToe.markMove(2,1);
-        char[][] board1 = {{'X','O','X'},{'O','O','X'},{'X','X','O'}};
-        char[][] board2 = ticTacToe.getBoard();
-        Assert.assertArrayEquals(board1, board2);
-    }*/
 
 }
