@@ -88,12 +88,12 @@ public class UltimateTicTacToeTest {
 
     @Test
     public void getGlobalBoard_11IsOAfterTheSixthMove_True(){
-        boolean a = ultimateTicTacToe.markMove(1,1);
-        boolean b = ultimateTicTacToe.markMove(4,3);
-        boolean c = ultimateTicTacToe.markMove(4,1);
-        boolean d = ultimateTicTacToe.markMove(5,3);
-        boolean e = ultimateTicTacToe.markMove(7,1);
-        boolean f = ultimateTicTacToe.markMove(3,3);
+        ultimateTicTacToe.markMove(1,1);
+        ultimateTicTacToe.markMove(4,3);
+        ultimateTicTacToe.markMove(4,1);
+        ultimateTicTacToe.markMove(5,3);
+        ultimateTicTacToe.markMove(7,1);
+        ultimateTicTacToe.markMove(3,3);
         var board = ultimateTicTacToe.getGlobalBoard();
         Assert.assertEquals('O',board[1][1]);
     }
@@ -108,7 +108,7 @@ public class UltimateTicTacToeTest {
         boolean f = ultimateTicTacToe.markMove(3,3);
 
         boolean g = ultimateTicTacToe.markMove(1,0);
-        boolean h = ultimateTicTacToe.markMove(5,0);
+        boolean h = ultimateTicTacToe.markMove(5, 0);
         boolean i = ultimateTicTacToe.markMove(7,0);
         boolean j = ultimateTicTacToe.markMove(5,1);
         boolean k = ultimateTicTacToe.markMove(7,3);
@@ -120,26 +120,26 @@ public class UltimateTicTacToeTest {
 
     @Test
     public void getGlobalBoard_02IsOAfterTheEleventhMove_True(){
-        boolean a = ultimateTicTacToe.markMove(1,1);
-        boolean b = ultimateTicTacToe.markMove(4,3);
-        boolean c = ultimateTicTacToe.markMove(4,1);
-        boolean d = ultimateTicTacToe.markMove(5,3);
-        boolean e = ultimateTicTacToe.markMove(7,1);
-        boolean f = ultimateTicTacToe.markMove(3,3);
+        ultimateTicTacToe.markMove(1,1);
+        ultimateTicTacToe.markMove(4,3);
+        ultimateTicTacToe.markMove(4,1);
+        ultimateTicTacToe.markMove(5,3);
+        ultimateTicTacToe.markMove(7,1);
+        ultimateTicTacToe.markMove(3,3);
 
-        boolean g = ultimateTicTacToe.markMove(1,0);
-        boolean h = ultimateTicTacToe.markMove(5,0);
-        boolean i = ultimateTicTacToe.markMove(7,0);
-        boolean j = ultimateTicTacToe.markMove(5,1);
-        boolean k = ultimateTicTacToe.markMove(7,3);
-        boolean l = ultimateTicTacToe.markMove(5,2);
+        ultimateTicTacToe.markMove(1,0);
+        ultimateTicTacToe.markMove(5,0);
+        ultimateTicTacToe.markMove(7,0);
+        ultimateTicTacToe.markMove(5,1);
+        ultimateTicTacToe.markMove(7,3);
+        ultimateTicTacToe.markMove(5,2);
 
-        boolean m = ultimateTicTacToe.markMove(7,8);
-        boolean n = ultimateTicTacToe.markMove(5,7);
-        boolean o = ultimateTicTacToe.markMove(7,5);
-        boolean p = ultimateTicTacToe.markMove(3,7);
-        boolean q = ultimateTicTacToe.markMove(1,5);
-        boolean r = ultimateTicTacToe.markMove(4,7);
+        ultimateTicTacToe.markMove(7,8);
+        ultimateTicTacToe.markMove(5,7);
+        ultimateTicTacToe.markMove(7,5);
+        ultimateTicTacToe.markMove(3,7);
+        ultimateTicTacToe.markMove(1,5);
+        ultimateTicTacToe.markMove(4,7);
 
         var board = ultimateTicTacToe.getGlobalBoard();
         Assert.assertEquals('O',board[1][0]);

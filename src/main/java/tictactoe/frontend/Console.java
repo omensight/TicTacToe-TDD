@@ -1,19 +1,24 @@
 package tictactoe.frontend;
 
-import tictactoe.backend.ITicTacToe;
 import tictactoe.backend.IUltimateTicTacToe;
 import tictactoe.controller.MyEvent;
+import tictactoe.frontend.util.AnsiColors;
+import tictactoe.frontend.util.IBoxUI;
+import tictactoe.frontend.util.ITicTacToeBoardRenderer;
+import tictactoe.frontend.util.UltimateBoardRenderer;
 
 public class Console implements ITicTacToeUI {
     private final IUltimateTicTacToe game;
-    private final Helper helper;
+    private final ConsoleHelper consoleHelper;
     private String piece;
+    private final ITicTacToeBoardRenderer renderer;
 
     public Console(IUltimateTicTacToe game) {
         this.game = game;
         this.game.addListener(this);
-        helper = new Helper();
+        consoleHelper = new ConsoleHelper();
         piece = "X";
+        renderer = new UltimateBoardRenderer(game);
     }
 
     @Override
@@ -44,28 +49,28 @@ public class Console implements ITicTacToeUI {
 
     private void setLabelsGameInit() {
         System.out.println();
-        System.out.println(helper.colorYellow() + "\n ----------- TIC TAC TOE 1.0 ----------- \n" + helper.resetColor());
+        System.out.println(AnsiColors.YELLOW + "\n ----------- TIC TAC TOE 1.0 ----------- \n" + AnsiColors.RESET);
     }
 
     private void setLabelsMessagesOptionsInit() {
         piece = "X";
-        System.out.println(helper.colorBlue() + "\n\nChoose a number from 1 to 9 for play" + helper.resetColor());
-        System.out.println(helper.colorGreen() + "> Press 10 new game \n> Press 11 to the exit game" + helper.resetColor());
+        System.out.println(AnsiColors.BLUE + "\n\nChoose a number from 1 to 9 for play" + AnsiColors.RESET);
+        System.out.println(AnsiColors.GREEN + "> Press 10 new game \n> Press 11 to the exit game" + AnsiColors.RESET);
         showBoardGame();
         System.out.print("- enter the play number " + piece + " : ");
     }
 
     private void movePlayer() {
-        int number = helper.enterNumber(81, "play number");
+        int number = consoleHelper.enterNumber(81, "play number");
         if (number == 82) {
             game.create();
         } else {
             if (number == 83) {
-                System.out.println(helper.messageFinishGame());
+                System.out.println(consoleHelper.messageFinishGame());
                 System.exit(0);
             } else {
                 if (!game.markMove(convertRow(number), convertColumn(number))) {
-                    System.out.println(helper.colorRed() + "***play not valid, box already checked" + helper.resetColor());
+                    System.out.println(AnsiColors.RED + "***play not valid, box already checked" + AnsiColors.RESET);
                     System.out.print("- re-enter the play number: ");
                     movePlayer();
                 }
@@ -76,11 +81,11 @@ public class Console implements ITicTacToeUI {
     private void checkStatusGame() {
         if (game.checkTicTacToe()) {
             String winner = String.valueOf(game.winner());
-            System.out.println(helper.messageWinnerGame(winner) + "\n");
+            System.out.println(consoleHelper.messageWinnerGame(winner) + "\n");
             starSubMenu();
         } else {
             if (game.draw()) {
-                System.out.println(helper.messageDrawGame() + "\n");
+                System.out.println(consoleHelper.messageDrawGame() + "\n");
                 starSubMenu();
             } else {
                 System.out.print("- enter the play number " + piece + " : ");
@@ -89,31 +94,32 @@ public class Console implements ITicTacToeUI {
     }
 
     private void starSubMenu() {
-        System.out.println(helper.colorGreen() + "> Press 10 new game \n> Press 11 to the exit game" + helper.resetColor() + "\n");
+        System.out.println(AnsiColors.GREEN + "> Press 10 new game \n> Press 11 to the exit game" + AnsiColors.RESET + "\n");
         System.out.print("- enter the option: ");
     }
 
     private void showBoardGame() {
-        char[][] boardPlay = game.getBoard();
-        char[][] globalBoard = game.getGlobalBoard();
-        var enabledQuadrant = game.getEnabledQuadrant();
+        var board = renderer.getRenderableBoard();
+        var getCool = game.getEnabledQuadrant();
+        System.out.println(getCool.getX() + "," + getCool.getY());
         System.out.println();
-        for (int i = 0; i < boardPlay.length; i++) {
-            char[] chars = boardPlay[i];
-            for (int j = 0; j < boardPlay.length; j++) {
-                char box = chars[j];
-                if (box == 0){
-                    box = ' ';
-                }
-                String boxColor = box == 'X' ? helper.colorPurple() : helper.colorCyan();
-                System.out.print("[ ");
-                System.out.print(boxColor + box);
-                System.out.print(helper.resetColor() + " ]");
+        for (int i = 0; i < board.length; i++) {
+            IBoxUI[] chars = board[i];
+            for (int j = 0; j < board.length; j++) {
+                IBoxUI currentBox = chars[j];
+                String boxColor = currentBox.getBoxColor();
+                String symbolColor = currentBox.getSymbolColor();
+                System.out.print(boxColor + "[ ");
+                System.out.print(symbolColor + currentBox.getSymbol());
+                System.out.print(boxColor + " ]" + AnsiColors.RESET);
 
             }
             System.out.println();
         }
         System.out.println();
+
+        getCool = game.getEnabledQuadrant();
+        System.out.println(getCool.getX() + "," + getCool.getY());
     }
 
     private void changeLabelTurn() {

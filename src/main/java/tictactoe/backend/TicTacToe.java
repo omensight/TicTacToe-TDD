@@ -8,7 +8,7 @@ import tictactoe.controller.MyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TicTacToe implements ITicTacToe {
+public class TicTacToe implements IObservableTicTacToe {
     private final char[][] board;
     private final int dimension;
     private final List<ITicTacToeUI> support;
@@ -236,7 +236,7 @@ public class TicTacToe implements ITicTacToe {
     }
 
     @Override
-    public void addListener(ITicTacToeUI tictactoeUI) {
-        support.add(tictactoeUI);
+    public void addListener(ITicTacToeUI ticTacToeUI) {
+        support.add(ticTacToeUI);
     }
 }

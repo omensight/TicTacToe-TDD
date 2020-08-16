@@ -10,16 +10,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class UltimateTicTacToe implements IUltimateTicTacToe, ITicTacToeUI {
-    private ITicTacToe globalBoard;
-    private ITicTacToe[][] localBoards;
+    private IObservableTicTacToe globalBoard;
+    private IObservableTicTacToe[][] localBoards;
     public final static int QUADRANT_LIMIT = 3;
     public final static int LENGTH = QUADRANT_LIMIT * QUADRANT_LIMIT;
     private Pair<Integer, Integer> enabledQuadrant;
 
     private List<ITicTacToeUI> listeners;
     private ITurnHandler<Character> turnHandler;
-    private QuadrantMathHelper quadrantMathHelper;
-
+    private MathQuadrantHelper mathQuadrantHelper;
+    private MathBoardHelper mathBoardHelper;
+    private List<Pair<Integer,Integer>> disabledQuadrants;
     public UltimateTicTacToe() {
         initialize();
         create();
@@ -31,14 +32,16 @@ public class UltimateTicTacToe implements IUltimateTicTacToe, ITicTacToeUI {
         globalBoard = new TicTacToe(turnHandler);
         globalBoard.addListener(this);
         listeners = new ArrayList<>();
+        disabledQuadrants = new ArrayList<>();
         for (int i = 0; i < QUADRANT_LIMIT; i++) {
             for (int j = 0; j < QUADRANT_LIMIT; j++) {
-                ITicTacToe ticTacToe = new TicTacToe(turnHandler);
+                IObservableTicTacToe ticTacToe = new TicTacToe(turnHandler);
                 ticTacToe.addListener(this);
                 localBoards[i][j] = ticTacToe;
             }
         }
-        quadrantMathHelper = new QuadrantMathHelper(QUADRANT_LIMIT);
+        mathQuadrantHelper = new MathQuadrantHelper(QUADRANT_LIMIT);
+        mathBoardHelper = new MathBoardHelper(QUADRANT_LIMIT);
     }
 
     @Override
@@ -62,22 +65,18 @@ public class UltimateTicTacToe implements IUltimateTicTacToe, ITicTacToeUI {
         if (row >= LENGTH || column >= LENGTH) {
             marked = false;
         } else {
-            int xQuadrant = row / QUADRANT_LIMIT;
-            int yQuadrant = column / QUADRANT_LIMIT;
-            int quadrant = xQuadrant * QUADRANT_LIMIT + yQuadrant;
-            int ticTacToeRow = row % QUADRANT_LIMIT;
-            int ticTacToeColumn = column % QUADRANT_LIMIT;
-            marked = markMove(quadrant, ticTacToeRow, ticTacToeColumn);
+            int quadrant = mathQuadrantHelper.getQuadrantFromGlobalCoordinates(row,column);
+            Pair<Integer,Integer> localCoordinates = mathBoardHelper.getLocalCoordinates(row, column);
+            marked = markMove(quadrant, localCoordinates.getX(), localCoordinates.getY());
         }
         return marked;
     }
 
-    private boolean isQuadrantAbleToMark(int enabledQuadrantCandidate) {
-        int xQuadrant = enabledQuadrantCandidate / QUADRANT_LIMIT;
-        int yQuadrant = enabledQuadrantCandidate % QUADRANT_LIMIT;
-        return (xQuadrant == enabledQuadrant.getX() && yQuadrant == enabledQuadrant.getY())
-                || (-1 == enabledQuadrant.getX() && -1 == enabledQuadrant.getY())
-                && xQuadrant < QUADRANT_LIMIT;
+    private boolean isQuadrantAbleToMark(Pair<Integer, Integer> quadrant) {
+
+        return (quadrant.equals(enabledQuadrant)
+                || enabledQuadrant.equals(new Pair<>(-1,-1)))
+                && quadrant.getX() < QUADRANT_LIMIT;
     }
 
     @Override
@@ -98,17 +97,17 @@ public class UltimateTicTacToe implements IUltimateTicTacToe, ITicTacToeUI {
     @Override
     public char[][] getBoard() {
         char[][] ultimateTicTacToeBoard = new char[LENGTH][LENGTH];
-        var test = localBoards[1][1];
         for (int i = 0; i < QUADRANT_LIMIT; i++) {
             for (int j = 0; j < QUADRANT_LIMIT; j++) {
-                int xOffset = i * QUADRANT_LIMIT;
-                int yOffset = j * QUADRANT_LIMIT;
+                Pair<Integer,Integer> offset = mathBoardHelper.getOffset(i, j);
                 ITicTacToe currentTicTacToe = localBoards[i][j];
                 char[][] currentBoard = currentTicTacToe.getBoard();
                 for (int k = 0; k < currentBoard.length; k++) {
-                    for (int l = 0; l < currentBoard[k].length; l++) {
-                        ultimateTicTacToeBoard[xOffset + k][yOffset + l] = currentBoard[k][l];
-                    }
+                    System.arraycopy(currentBoard[k],
+                            0,
+                            ultimateTicTacToeBoard[offset.getX() + k],
+                            offset.getY(),
+                            currentBoard[k].length);
                 }
             }
         }
@@ -137,15 +136,20 @@ public class UltimateTicTacToe implements IUltimateTicTacToe, ITicTacToeUI {
 
     @Override
     public boolean markMove(int quadrant, int row, int column) {
-        int xQuadrant = quadrant / QUADRANT_LIMIT;
-        int yQuadrant = quadrant % QUADRANT_LIMIT;
+        Pair<Integer,Integer> quadrantComponents = mathQuadrantHelper.getQuadrantComponents(quadrant);
         boolean marked = false;
-        if (isQuadrantAbleToMark(quadrant)) {
-            ITicTacToe localBoard = localBoards[xQuadrant][yQuadrant];
-            if (marked = localBoard.markMove(row, column)){
-                turnHandler.changeTurn();
+        if (isQuadrantAbleToMark(quadrantComponents)) {
+            if (!disabledQuadrants.contains(quadrantComponents)){
+                enabledQuadrant.set(row, column);
+                ITicTacToe localBoard = localBoards[quadrantComponents.getX()][quadrantComponents.getY()];
+                if (marked = localBoard.markMove(row, column)){
+                    turnHandler.changeTurn();
+                    if (disabledQuadrants.contains(new Pair<>(row, column))){
+                        enabledQuadrant.set(-1,-1);
+                    }
+                }
             }
-            enabledQuadrant.set(row, column);
+
         }
         return marked;
     }
@@ -165,32 +169,33 @@ public class UltimateTicTacToe implements IUltimateTicTacToe, ITicTacToeUI {
         Object source = evt.getSource();
         int index = getLocalBoardsAsList().indexOf(source);
         if (index != -1) {
+            Pair<Integer,Integer> quadrant = mathQuadrantHelper.getQuadrantComponents(index);
             switch (evt.getPropertyName()) {
                 case "markMove": {
                     listeners.forEach(iTicTacToeUI -> {
-                        iTicTacToeUI.update(
-                                new MyEvent(this, "markMove", null, null)
-                        );
+                        notify(new MyEvent(this, "markMove", null, null));
 
                     });
-                    int x = index / QUADRANT_LIMIT;
-                    int y = index % QUADRANT_LIMIT;
-                    localBoards[x][y].checkTicTacToe();
+                    localBoards[quadrant.getX()][quadrant.getY()].checkTicTacToe();
                     break;
                 }
                 case "winner": {
-                    int x = index / QUADRANT_LIMIT;
-                    int y = index % QUADRANT_LIMIT;
-                    globalBoard.markMove(x, y);
+                    disabledQuadrants.add(quadrant);
+                    globalBoard.markMove(quadrant.getX(), quadrant.getY());
+                    notify(new MyEvent(this, "markMove", null, null));
+                    enabledQuadrant.set(-1,-1);
                     break;
                 }
             }
         }else if (source == globalBoard){
-            System.out.println("Event");
-            listeners.forEach(ticTacToeUI->{
-                ticTacToeUI.update(evt);
-            });
+            notify(evt);
         }
 
+    }
+
+    private void notify(MyEvent event){
+        listeners.forEach(iTicTacToeUI -> {
+            iTicTacToeUI.update(event);
+        });
     }
 }

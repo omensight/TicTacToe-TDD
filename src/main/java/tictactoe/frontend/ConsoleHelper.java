@@ -1,12 +1,14 @@
 package tictactoe.frontend;
 
+import tictactoe.frontend.util.AnsiColors;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Helper {
+public class ConsoleHelper {
     private Scanner sc;
 
-    public Helper() {
+    public ConsoleHelper() {
         sc = null;
     }
     // Input Number Console
@@ -18,12 +20,12 @@ public class Helper {
                 sc = new Scanner(System.in);
                 number = sc.nextInt();
                 while (number < 1 || number > max) {
-                    System.out.println(colorRed() + "*** " + message + " not valid, enter another" + resetColor());
+                    System.out.println(AnsiColors.RED + "*** " + message + " not valid, enter another" + AnsiColors.RESET);
                     System.out.print("- enter the " + message + ": ");
                     number = sc.nextInt();
                 }
             } catch (InputMismatchException ime) {
-                System.out.println(colorRed() + "***Watch out! You can only insert numbers" + resetColor());
+                System.out.println(AnsiColors.RED + "***Watch out! You can only insert numbers" + AnsiColors.RESET);
                 System.out.print("- enter the " + message + ": ");
                 assert sc != null;
                 sc.next();
@@ -36,20 +38,7 @@ public class Helper {
         return number;
     }
 
-    //Colors Console
-    public String colorRed(){ return "\033[31m"; }
 
-    public String colorGreen(){ return "\033[32m"; }
-
-    public String colorYellow(){ return "\033[33m"; }
-
-    public String colorBlue(){ return "\033[34m"; }
-
-    public String colorPurple(){ return "\033[35m"; }
-
-    public String colorCyan(){ return "\033[36m"; }
-
-    public String resetColor(){ return "\u001B[0m"; }
 
     //Message Game
     public String messageWinnerGame(String winner){

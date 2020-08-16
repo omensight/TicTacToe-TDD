@@ -1,29 +1,27 @@
 package tictactoe.frontend;
 
-import tictactoe.backend.ITicTacToe;
+import tictactoe.backend.IObservableTicTacToe;
 import tictactoe.controller.MyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.plaf.basic.BasicBorders;
 import java.awt.*;
 
 public class GUI extends JFrame implements ITicTacToeUI{
-    private final ITicTacToe game;
-    private final Helper helper;
+    private final IObservableTicTacToe game;
+    private final ConsoleHelper consoleHelper;
     private final static int WIDTH = 9;
     private final static int TOTAL_LENGTH = WIDTH*WIDTH;
     private JButton[] buttons;
     private JLabel labelTurn;
 
-    public GUI(ITicTacToe game) {
+    public GUI(IObservableTicTacToe game) {
         this.game = game;
         this.game.addListener(this);
-        helper = new Helper();
+        consoleHelper = new ConsoleHelper();
     }
 
     @Override
@@ -104,12 +102,12 @@ public class GUI extends JFrame implements ITicTacToeUI{
 
     private void checkStatusGame() {
         if(game.checkTicTacToe()){
-            String winnerOut = helper.messageWinnerGame(String.valueOf(game.winner()));
+            String winnerOut = consoleHelper.messageWinnerGame(String.valueOf(game.winner()));
             labelTurn.setText(winnerOut);
             setButtonEnable(false);
         }else{
             if (game.draw()){
-                labelTurn.setText(helper.messageDrawGame());
+                labelTurn.setText(consoleHelper.messageDrawGame());
                 setButtonEnable(false);
             }
         }
